@@ -28,8 +28,9 @@ module Async
 	module Sequel
 		module ConnectionPool
 			class Fibered < ::Sequel::ConnectionPool
-				def initialize(database, limit: nil, **options)
-					super(database, **options)
+				def initialize(database, options = ::Sequel::OPTS)
+					@limit = @options.delete(:limit)
+					super(database, options)
 					
 					@database = database
 					@options = options
@@ -37,7 +38,6 @@ module Async
 					@resources = []
 					@available = Async::Notification.new
 					
-					@limit = limit
 					@active = 0
 				end
 				
