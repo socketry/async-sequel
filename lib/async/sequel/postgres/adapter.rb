@@ -74,7 +74,7 @@ module Async
 						end
 					end
 				ensure
-					@connection.get_result until result.nil?
+					result = @connection.get_result until result.nil?
 				end
 				
 				alias exec async_exec
